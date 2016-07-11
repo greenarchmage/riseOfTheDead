@@ -1,0 +1,15 @@
+Units:
+Add unit types
+Add cost of defeat
+
+Towers:
+Add projectiles
+Add types
+Selection
+Purchase
+
+Player:
+Currency
+
+General
+Start Menu
