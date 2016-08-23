@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System;
 
 public class UnitSpawner : MonoBehaviour {
+    public GameObject Target;
 
     private List<GameObject> units;
 
@@ -18,7 +19,7 @@ public class UnitSpawner : MonoBehaviour {
         {
             GameObject unit = Instantiate(units[i], transform.position, Quaternion.identity) as GameObject;
             //Should be changed to be the spawners target
-            unit.GetComponent<Unit>().target = GameController.Instance.EndTarget.transform;
+            unit.GetComponent<Unit>().Target = Target;
         }
         units.Clear();
 	}

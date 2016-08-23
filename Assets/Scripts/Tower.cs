@@ -36,7 +36,7 @@ public class Tower : MonoBehaviour {
                 Collider2D col = hitColliders[i];
                 if(col.gameObject.GetComponent<Unit>() != null)
                 {
-                    float tempdist = Vector3.Distance(col.transform.position, col.gameObject.GetComponent<Unit>().target.position);
+                    float tempdist = Vector3.Distance(col.transform.position, col.gameObject.GetComponent<Unit>().Target.transform.position);
                     if (tempdist < curDist)
                     {
                         curTar = col.gameObject;

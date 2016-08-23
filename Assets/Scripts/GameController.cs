@@ -55,8 +55,12 @@ public class GameController : MonoBehaviour {
                 {
                     hit.collider.GetComponent<Tower>().Owner = p1;
                 }
-                Debug.Log(hit.collider.gameObject.name);
-                Debug.Log("Hit");
+                if(hit.collider.gameObject.GetComponent<TowerGround>() != null)
+                {
+                    Debug.Log("Created Tower");
+                    Instantiate(Resources.Load("Prefabs/Tower"), hit.transform.position, Quaternion.identity);
+                    Destroy(hit.collider.gameObject);
+                }
             }
         }
 	}

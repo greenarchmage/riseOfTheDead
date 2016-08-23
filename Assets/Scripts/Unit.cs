@@ -4,7 +4,7 @@ using System;
 
 public class Unit : MonoBehaviour {
     private float speed = 5f;
-    public Transform target;
+    public GameObject Target;
 
     private int maxHitpoints = 10;
     private int hitpoints = 10;
@@ -17,9 +17,14 @@ public class Unit : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         float step = speed * Time.deltaTime;
-        if (target != null)
+        if (Target != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target.position, step);
+            transform.position =  Vector3.MoveTowards(transform.position, Target.transform.position, step);
+            transform.position.Set(transform.position.x, transform.position.y, 0);
+        }
+        if(Vector2.Distance( transform.position,Target.transform.position) < 0.1)
+        {
+            this.Target = Target.GetComponent<WayPoint>().Target;
         }
     }
 
