@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using Assets.Scripts.Units;
 
 public class Unit : MonoBehaviour {
-    private float speed = 5f;
     public GameObject Target;
+    public string UnitName {get;set;}
 
-    private int maxHitpoints = 10;
-    private int hitpoints = 10;
+    private int maxHitpoints;
+    private float speed;
+    private int currentHitpoints = 10;
 
 	// Use this for initialization
 	void Start () {
@@ -30,14 +32,22 @@ public class Unit : MonoBehaviour {
 
     public void ChangeHitpoints(int amount)
     {
-        hitpoints += amount;
-        if (hitpoints <= 0)
+        currentHitpoints += amount;
+        if (currentHitpoints <= 0)
         {
             Destroy(gameObject);
         }
-        if (hitpoints > maxHitpoints)
+        if (currentHitpoints > maxHitpoints)
         {
-            hitpoints = maxHitpoints;
+            currentHitpoints = maxHitpoints;
         }
+    }
+
+    public void SetStats(UnitStats unitStats)
+    {
+        maxHitpoints = unitStats.Hitpoints;
+        currentHitpoints = unitStats.Hitpoints;
+        speed = unitStats.Speed;
+        UnitName = unitStats.UnitName;
     }
 }

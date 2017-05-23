@@ -2,30 +2,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using Assets.Scripts.Units;
 
 public class UnitSpawner : MonoBehaviour {
     public GameObject Target;
 
-    private List<GameObject> units;
+    private float spawnInitialTime;
+    private List<UnitDelayPair> spawnerUnits;
 
 	// Use this for initialization
 	void Start () {
-        units = new List<GameObject>();
+        spawnerUnits = new List<UnitDelayPair>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	    for(int i= 0; i < units.Count; i++)
+        List<int> unitsToRemove = new List<int>();
+        for(int i = 0; i<spawnerUnits.Count; i++)
         {
-            GameObject unit = Instantiate(units[i], transform.position, Quaternion.identity) as GameObject;
-            //Should be changed to be the spawners target
-            unit.GetComponent<Unit>().Target = Target;
+            if(Time.time > spawnInitialTime + spawnerUnits[i].Delay)
+            {
+                GameObject unit = Instantiate(Resources.Load("Prefabs/UnitTemplate") as GameObject, transform.position, Quaternion.identity) as GameObject;
+                unit.GetComponent<Unit>().SetStats(spawnerUnits[i].Unit);
+                unit.GetComponent<Unit>().Target = Target;
+                unitsToRemove.Add(i);
+            }
         }
-        units.Clear();
+        for(int i = 0; i<unitsToRemove.Count;i++)
+        {
+            spawnerUnits.RemoveAt(unitsToRemove[i]);
+        }
 	}
 
-    public void AddUnit()
+    public void AddUnit(List<UnitDelayPair> unitsStats)
     {
-        units.Add(Resources.Load("Prefabs/UnitMarker") as GameObject);
+        spawnerUnits = unitsStats;
+        spawnInitialTime = Time.time;
     }
 }

@@ -2,6 +2,8 @@
 using System.Collections;
 using Assets.Scripts.Utility;
 using UnityEngine.UI;
+using Assets.Scripts.Units;
+using System.Collections.Generic;
 
 public class GameController : MonoBehaviour {
     //Test Stuff
@@ -11,6 +13,8 @@ public class GameController : MonoBehaviour {
     private string scoreText = "Current losses:";
     private int score = 0;
     private Player p1;
+    private List<UnitDelayPair> testSpawnerCollection;
+    private bool notSpawned;
 
     //NON test stuff
     public static GameController Instance;
@@ -27,9 +31,19 @@ public class GameController : MonoBehaviour {
             Destroy(gameObject);
         }
     }
-
+    
     // Use this for initialization
     void Start () {
+
+        // Wave creation test
+        // first wave cluster
+        UnitStats adventure = new UnitStats() { UnitName = "Adventure", Hitpoints = 10, Speed = 2.5f};
+        List<UnitDelayPair> units = new List<UnitDelayPair>();
+        for (int i = 0; i < 5; i++)
+        {
+            units.Add(new UnitDelayPair() { Delay = i*0.5f, Unit = adventure });
+        }
+        testSpawnerCollection = units;
 
         //Test of players
         p1 = new Player("Simba");
@@ -41,7 +55,12 @@ public class GameController : MonoBehaviour {
         // Test of unit spawner
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Spawner.GetComponent<UnitSpawner>().AddUnit();
+            //Spawner.GetComponent<UnitSpawner>().AddUnit(new list);
+        }
+        if (Time.realtimeSinceStartup > 4 && !notSpawned)
+        {
+            Spawner.GetComponent<UnitSpawner>().AddUnit(testSpawnerCollection);
+            notSpawned = true;
         }
 
         // Test select towers
