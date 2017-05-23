@@ -1,3 +1,11 @@
+General:
+Design test waves
+Fix tower grounds
+create menu for buying tower types
+add sprite module and animation
+screen resizing. look at dragon lords
+
+
 Units:
 Add unit types
 Add cost of defeat
